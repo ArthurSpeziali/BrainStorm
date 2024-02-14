@@ -3,7 +3,6 @@ class Exceptions:
         line = self.ExceptionMaker(index)
         
         self.OutofRange = Exception(f'Array Out of Range[{code}]{line}')
-        
     def ExceptionMaker(self, index):
         line = '\n\n'
         
