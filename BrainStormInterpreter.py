@@ -80,7 +80,7 @@ while item < len(script):
         if not '[' in script[: item]:
             raise(Exceptions(item, 1).NotOpenorCloseBrackets)
             
-        if array_bit[home] == last:
+        if array_bit[home] >= last:
             raise(Exceptions(item).InfinityLoop)
             
         if array_bit[home] > 0:
