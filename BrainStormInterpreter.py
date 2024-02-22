@@ -1,4 +1,4 @@
-#Código criado por Arthur Speziali (https://www.githun.com/ArthurSpeziali)
+# Código criado por Arthur Speziali (https://www.githun.com/ArthurSpeziali)
 
 from modules.Exceptions import Exceptions
 
@@ -63,15 +63,15 @@ while item < len(script):
 
     
     elif char == '[':
+        
         if not ']' in script[item:]:
             raise(Exceptions(item, 0).NotOpenorCloseBrackets)
         
         if '[' in script[item + 1: script.find(']')]:
             raise(Exceptions(item).DoubleLoop)
         
-        if not '-' in script[item: script.find(']', item)]:
-            raise(Exceptions(item).InfinityLoop)
         
+        last = array_bit[home]
         if array_bit[home] == 0:
             item = script.find(']', item)            
         
@@ -79,6 +79,9 @@ while item < len(script):
     elif char == ']':
         if not '[' in script[: item]:
             raise(Exceptions(item, 1).NotOpenorCloseBrackets)
+            
+        if array_bit[home] == last:
+            raise(Exceptions(item).InfinityLoop)
             
         if array_bit[home] > 0:
             item = script[:item].rfind('[')
