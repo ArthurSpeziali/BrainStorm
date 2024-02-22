@@ -1,0 +1,6 @@
+'' -> Declarar o tipo de tabela para os dados (ASCII, ANSI, NUMBER)
+"" -> Declara os operadores (>, !=, ||)
+() -> Obtem o valor da casa especificada, se não tiver nenhum número usa a casa atual ((32), ())
+{} -> Aconttecimentos de uma estrutura condicional
+\, |, / -> If, Else, Elif
+* -> Nos operadores, substitui pelo numero salvo pelos ()
