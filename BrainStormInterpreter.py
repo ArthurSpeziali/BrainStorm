@@ -1,9 +1,11 @@
 # Código criado por Arthur Speziali (https://www.githun.com/ArthurSpeziali)
 
 from modules.Exceptions import Exceptions
+from modules.Functions import Functions
 
 with open('script.bstm') as script_file:
     script = script_file.read().replace('\n', '').replace(' ', '')
+
 
 Exceptions.script = script
 array_bit = [0]
@@ -30,7 +32,7 @@ while item < len(script):
         
         
     elif char == '+':
-        if array_bit[home] > 127:
+        if array_bit[home] > 255:
             array_bit[home] = 0
             
         else:
@@ -39,7 +41,7 @@ while item < len(script):
             
     elif char == '-':
         if array_bit[home] == 0:
-            array_bit[home] = 127
+            array_bit[home] = 255
             
         else:
             array_bit[home] -= 1
@@ -55,8 +57,10 @@ while item < len(script):
         if len(char_bit) > 1:
             raise(Exceptions(item, len(char_bit)).MultipleCharByte)
         
+        if len(char_bit) == 0:
+            raise(Exceptions(item).CharNull)
     
-        if ord(char_bit) > 126:
+        if ord(char_bit) > 255:
             raise(Exceptions(item, ord(char_bit)).NoAsciiChar)
             
         array_bit[home] = ord(char_bit)
@@ -71,7 +75,7 @@ while item < len(script):
             raise(Exceptions(item).DoubleLoop)
         
         
-        last = array_bit[home]
+        last = home
         if array_bit[home] == 0:
             item = script.find(']', item)            
         
@@ -80,11 +84,34 @@ while item < len(script):
         if not '[' in script[: item]:
             raise(Exceptions(item, 1).NotOpenorCloseBrackets)
             
-        if array_bit[home] >= last:
+        if home == last:
             raise(Exceptions(item).InfinityLoop)
             
         if array_bit[home] > 0:
             item = script[:item].rfind('[')
+    
+    elif char == ';':
+        char_array = input()
+        
+        if len(char_array) > 2048:
+            raise(Exceptions(item, 2048).CharOutofRange)
+        
+        if len(char_array) + len(array_bit) >= 4096:
+            raise(Exceptions(item, 4096).CharExceededArray)
+        
+        if len(char_array) == 0:
+            raise(Exceptions(item).CharNull)
+        
+        for c in char_array:
+            if ord(c) > 255:
+                raise(Exceptions(item, ord(c)).NoAsciiChar)
+            
+            if len(array_bit) == home + 1:
+                array_bit.append(0)
+                
+            home += 1
+            
+            array_bit[home] = ord(c)
         
         
     item += 1

@@ -4,3 +4,4 @@
 {} -> Aconttecimentos de uma estrutura condicional
 \, |, / -> If, Else, Elif
 * -> Nos operadores, substitui pelo numero salvo pelos ()
+; -> Captura vária letras e coloca cada um em uma casa
